@@ -1,7 +1,10 @@
-const rootReducer = (state, action) => {
-  return state;
-};
+import { configureStore } from "@reduxjs/toolkit";
+import filtersSlice from "./filtersSlice.js";
+import campersSlise from './campersSlice.js'
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    campers: campersSlise,
+    filters: filtersSlice,
+  },
 });

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchFilteredVehicles } from "../apiServise/apiServise.js";
 
 const initialState = {
   location: "",
@@ -26,18 +27,18 @@ const filtersSlice = createSlice({
     },
    extraReducers: (builder) => {
         builder
-            .addCase(fetchFilteredVehicles.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.items = action.payload;
-            })
-            .addCase(fetchFilteredVehicles.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.payload;
-            });
+          .addCase(fetchFilteredVehicles.pending, (state) => {
+            state.isLoading = true;
+            state.error = null;
+          })
+          .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.items = action.payload;
+          })
+          .addCase(fetchFilteredVehicles.rejected, (state, action) => {
+            state.isLoading = false;
+            state.error = action.payload;
+          });
     },
 });
 

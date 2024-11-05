@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
-import { fetchCampersDetails } from "../../apiServise/apiServise.js";
+import { fetchCamperDetails } from "../../apiServise/apiServise.js";
 
 function CampersPage() {
   const campersId = useParams();
@@ -12,7 +12,7 @@ function CampersPage() {
   useEffect(() => {
     async function fetchDetails() {
       try {
-        const { data } = await fetchCampersDetails(campersId);
+        const { data } = await fetchCamperDetails(campersId);
         setSelectedCamper(data);
       } catch (error) {
         alert("Error fetching movie details");

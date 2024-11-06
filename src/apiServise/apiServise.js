@@ -1,12 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io/campers";
+const BASE_URL = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
 
 axios.defaults.baseURL = BASE_URL;
-axios.defaults.params = {
-  per_page: 4,
-};
+
 
 export const fetchCamperDetails = createAsyncThunk(
   "camper/fetchCamperDetails",
@@ -24,16 +22,22 @@ export const fetchCamperDetails = createAsyncThunk(
 );
 
 export const fetchFilteredVehicles = createAsyncThunk(
-  "vehicles/fetchFiltered",
+  "filters/fetchFilteredVehicles",
   async (filters, { rejectWithValue }) => {
+    const params = new URLSearchParams();
+
+    Object.keys(filters).forEach((key) => {
+      if (filters[key]) {
+        params.append(key, filters[key]);
+      }
+    });
+
     try {
-      const response = await axios.get("/api/vehicles", { params: filters });
-      return response.data;
+      const response = await axios.get(`/campers?${params.toString()}`);
+      // Переконайтеся, що ви повертаєте масив
+      return response.data.vehicles || []; // Повертаємо масив vehicles або порожній масив
     } catch (error) {
-      console.error("Error fetching filtered vehicles:", error);
-      return rejectWithValue(
-        error.response?.data || "Failed to fetch vehicles"
-      );
+      return rejectWithValue(error.message);
     }
   }
 );

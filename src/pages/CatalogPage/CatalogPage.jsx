@@ -1,41 +1,62 @@
+
 import { NavLink } from "react-router-dom";
-import Logo from "../../components/Logo/Logo.jsx";
-import css from './CatalogPage.module.css'
-import Camper from "../../components/Camper/Camper.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  setLocationFilter,
+  setBodyTypeFilter,
+  toggleACFilter,
+  toggleBathroomFilter,
+  toggleGasFilter,
+  toggleKitchenFilter,
+  toggleMicrowaveFilter,
+  togglePetrolFilter,
+  toggleRadioFilter,
+  toggleRefrigeratorFilter,
+  setTransmissionFilter,
+  toggleTVFilter,
+  toggleWaterFilter,
+  resetFilters,
+ 
+} from "../../redux/filtersSlice";
+import Camper from "../../components/Camper/Camper";
+import CustomCheckbox from "../../components/CustomCheckbox/CustomCheckbox";
+import Logo from "../../components/Logo/Logo";
+import css from "./CatalogPage.module.css";
 import { fetchFilteredVehicles } from "../../apiServise/apiServise.js";
-import { setBodyTypeFilter, setLocationFilter, toggleACFilter, toggleBathroomFilter, toggleGasFilter, toggleKitchenFilter, toggleMicrowaveFilter, togglePetrolFilter, toggleRadioFilter, toggleRefrigeratorFilter, toggleTransmissionFilter, toggleTVFilter, toggleWaterFilter } from "../../redux/filtersSlice.js";
-import { selectHasACFilter, selectHasBathroomFilter, selectHasGasFilter, selectHasKitchenFilter, selectHasMicrowaveFilter, selectHasPetrolFilter, selectHasRadioFilter, selectHasRefrigeratorFilter, selectHasTransmissionFilter, selectHasTVFilter, selectHasWaterFilter } from "../../redux/selectors.js";
-import CustomCheckbox from "../../components/CustomCheckbox/CustomCheckbox.jsx";
 
 function CatalogPage() {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
 
-  const hasAC = useSelector(selectHasACFilter);
-   const hasTransmission = useSelector(selectHasTransmissionFilter);
-    const hasKitchen = useSelector(selectHasKitchenFilter);
-    const hasTV = useSelector(selectHasTVFilter);
-    const hasBathroom = useSelector(selectHasBathroomFilter);
-    const hasRadio = useSelector(selectHasRadioFilter);
-    const hasRefrigerator = useSelector(selectHasRefrigeratorFilter);
-    const hasMicrowave = useSelector(selectHasMicrowaveFilter);
-    const hasGas = useSelector(selectHasGasFilter);
-    const hasPetrol = useSelector(selectHasPetrolFilter);
-  const hasWater = useSelector(selectHasWaterFilter);
+  const {
+    isLoading,
+    error,
+    items: filteredCampers,
+    location,
+    bodyType,
+    AC,
+    transmission,
+    kitchen,
+    TV,
+    bathroom,
+    radio,
+    refrigerator,
+    microwave,
+    gas,
+    engine,
+    water,
+  } = filters;
 
+ 
+ const handleSearch = () => {
+   dispatch(fetchFilteredVehicles(filters)).then(() => {
+     dispatch(resetFilters()); // Скидаємо фільтри після пошуку
+   });
+ };
 
-  const handleSearch = () => {
-    dispatch(fetchFilteredVehicles(filters)); // Запуск запиту з поточними фільтрами
-  };
-
-  const bodyType = useSelector((state) => state.filters.bodyType);
-  
-    const handleBodyTypeChange = (type) => {
-      dispatch(setBodyTypeFilter(type));
-    };
   return (
     <div>
+      {/* Header and Navigation */}
       <div className={css.header}>
         <Logo />
         <div className={css.navContainer}>
@@ -52,88 +73,87 @@ function CatalogPage() {
         <input
           className={css.input}
           type="text"
+          value={location}
           onChange={(e) => dispatch(setLocationFilter(e.target.value))}
         />
-        <svg>
-          <use href={""}></use>
-        </svg>
       </div>
+
       <p>Filters</p>
       <p>Vehicle equipment</p>
       <ul>
         <li>
           <CustomCheckbox
-            checked={hasAC}
+            checked={AC}
             onChange={() => dispatch(toggleACFilter())}
             label="AC"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasTransmission}
-            onChange={() => dispatch(toggleTransmissionFilter())}
+            checked={transmission === "automatic"}
+            onChange={() => dispatch(setTransmissionFilter("automatic"))}
             label="Automatic"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasKitchen}
+            checked={kitchen}
             onChange={() => dispatch(toggleKitchenFilter())}
             label="Kitchen"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasTV}
+            checked={TV}
             onChange={() => dispatch(toggleTVFilter())}
             label="TV"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasBathroom}
+            checked={bathroom}
             onChange={() => dispatch(toggleBathroomFilter())}
             label="Bathroom"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasRadio}
+            checked={radio}
             onChange={() => dispatch(toggleRadioFilter())}
             label="Radio"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasRefrigerator}
+            checked={refrigerator}
             onChange={() => dispatch(toggleRefrigeratorFilter())}
             label="Refrigerator"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasMicrowave}
+            checked={microwave}
             onChange={() => dispatch(toggleMicrowaveFilter())}
             label="Microwave"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasGas}
+            checked={gas}
             onChange={() => dispatch(toggleGasFilter())}
             label="Gas"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasPetrol}
-            onChange={() => dispatch(togglePetrolFilter())}
+            checked={engine === "petrol"}
+            onChange={() => dispatch(togglePetrolFilter("petrol"))}
             label="Petrol"
           />
         </li>
         <li>
           <CustomCheckbox
-            checked={hasWater}
+            checked={water}
             onChange={() => dispatch(toggleWaterFilter())}
             label="Water"
           />
@@ -143,41 +163,40 @@ function CatalogPage() {
       <ul>
         <li>
           <button
-            className={bodyType === "Van" ? "selected" : ""}
-            onClick={() => handleBodyTypeChange("Van")}
+            className={bodyType === "Van" ? css.selected : ""}
+            onClick={() => dispatch(setBodyTypeFilter("Van"))}
           >
-            <svg>
-              <use href={""}></use>
-            </svg>
             Van
           </button>
         </li>
         <li>
           <button
-            className={bodyType === "Fully Integrated" ? "selected" : ""}
-            onClick={() => handleBodyTypeChange("Fully Integrated")}
+            className={bodyType === "Fully Integrated" ? css.selected : ""}
+            onClick={() => dispatch(setBodyTypeFilter("Fully Integrated"))}
           >
-            <svg>
-              <use href={""}></use>
-            </svg>
             Fully Integrated
           </button>
         </li>
         <li>
           <button
-            className={bodyType === "Alcove" ? "selected" : ""}
-            onClick={() => handleBodyTypeChange("Alcove")}
+            className={bodyType === "Alcove" ? css.selected : ""}
+            onClick={() => dispatch(setBodyTypeFilter("Alcove"))}
           >
-            <svg>
-              <use href={""}></use>
-            </svg>
+            Alcove
           </button>
         </li>
       </ul>
       <button onClick={handleSearch}>Search</button>
-      <Camper />
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      <div className={css.campersList}>
+        {filteredCampers.map((camper) => (
+          <Camper key={camper.id} data={camper} />
+        ))}
+      </div>
+      <button>Load More</button>
     </div>
   );
 }
 
-export default CatalogPage
+export default CatalogPage;

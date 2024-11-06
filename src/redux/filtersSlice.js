@@ -4,21 +4,21 @@ import { fetchFilteredVehicles } from "../apiServise/apiServise.js";
 const initialState = {
   location: "",
   bodyType: null,
-  hasPetrol: false, // Фільтр за типом двигуна
-  hasAutomaticTransmission: false, // Фільтр за автоматичною трансмісією
-  hasAC: false, // Фільтр за наявністю кондиціонера
-  hasBathroom: false, // Фільтр за наявністю ванної кімнати
-  hasKitchen: false, // Фільтр за наявністю кухні
-  hasTV: false, // Фільтр за наявністю телевізора
-  hasRadio: false, // Фільтр за наявністю радіо
-  hasRefrigerator: false, // Фільтр за наявністю холодильника
-  hasMicrowave: false, // Фільтр за наявністю мікрохвильовки
-  hasGas: false, // Фільтр за наявністю газу
-  hasWater: false, // Фільтр за наявністю водопостачання
-
-  items: [], // Список відфільтрованих кемперів
-  isLoading: false, // Статус завантаження
-  error: null, // Повідомлення про помилку
+  engine: null,
+  transmission: null,
+  AC: false,
+  bathroom: false,
+  kitchen: false,
+  TV: false,
+  radio: false,
+  refrigerator: false,
+  microwave: false,
+  gas: false,
+  water: false,
+  items: [],
+  isLoading: false,
+  error: null,
+  filteredCampers: [],
 };
 
 const filtersSlice = createSlice({
@@ -31,38 +31,42 @@ const filtersSlice = createSlice({
     setBodyTypeFilter(state, action) {
       state.bodyType = action.payload;
     },
-    togglePetrolFilter(state) {
-      state.hasPetrol = !state.hasPetrol;
+    togglePetrolFilter(state, action) {
+      state.engine = action.payload;
     },
-    toggleTransmissionFilter(state) {
-      state.automaticTransmission = !state.automaticTransmission;
+    setTransmissionFilter(state, action) {
+      
+      state.transmission = action.payload; 
     },
     toggleACFilter(state) {
-      state.hasAC = !state.hasAC;
+      state.AC = !state.AC;
     },
     toggleBathroomFilter(state) {
-      state.hasBathroom = !state.hasBathroom;
+      state.bathroom = !state.bathroom;
     },
     toggleKitchenFilter(state) {
-      state.hasKitchen = !state.hasKitchen;
+      state.kitchen = !state.kitchen;
     },
     toggleTVFilter(state) {
-      state.hasTV = !state.hasTV;
+      state.TV = !state.TV;
     },
     toggleRadioFilter(state) {
-      state.hasRadio = !state.hasRadio;
+      state.radio = !state.radio;
     },
     toggleRefrigeratorFilter(state) {
-      state.hasRefrigerator = !state.hasRefrigerator;
+      state.refrigerator = !state.refrigerator;
     },
     toggleMicrowaveFilter(state) {
-      state.hasMicrowave = !state.hasMicrowave;
+      state.microwave = !state.microwave;
     },
     toggleGasFilter(state) {
-      state.hasGas = !state.hasGas;
+      state.gas = !state.gas;
     },
     toggleWaterFilter(state) {
-      state.hasWater = !state.hasWater;
+      state.water = !state.water;
+    },
+    resetFilters() {
+      return initialState; 
     },
   },
   extraReducers: (builder) => {
@@ -71,9 +75,23 @@ const filtersSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
+       .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload;
+        state.filteredCampers = action.payload; 
+        state.location = "";
+        state.bodyType = null;
+        state.engine = null;
+        state.transmission = null;
+        state.AC = false;
+        state.bathroom = false;
+        state.kitchen = false;
+        state.TV = false;
+        state.radio = false;
+        state.refrigerator = false;
+        state.microwave = false;
+        state.gas = false;
+        state.water = false;
       })
       .addCase(fetchFilteredVehicles.rejected, (state, action) => {
         state.isLoading = false;
@@ -86,7 +104,7 @@ export const {
   setLocationFilter,
   setBodyTypeFilter,
   togglePetrolFilter,
-  toggleTransmissionFilter,
+  setTransmissionFilter,
   toggleACFilter,
   toggleBathroomFilter,
   toggleKitchenFilter,
@@ -96,6 +114,7 @@ export const {
   toggleMicrowaveFilter,
   toggleGasFilter,
   toggleWaterFilter,
+  resetFilters,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

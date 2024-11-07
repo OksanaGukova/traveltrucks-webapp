@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 import { fetchCamperDetails } from "../apiServise/apiServise.js";
 
 const camperSlice = createSlice({
   name: "camper",
   initialState: {
-    details: null,
+    details: [], // Ініціалізуємо як порожній масив
     loading: false,
     error: null,
   },
@@ -17,7 +17,7 @@ const camperSlice = createSlice({
       })
       .addCase(fetchCamperDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.details = action.payload;
+        state.details = action.payload; // Переконайтеся, що action.payload є масивом
       })
       .addCase(fetchCamperDetails.rejected, (state, action) => {
         state.loading = false;

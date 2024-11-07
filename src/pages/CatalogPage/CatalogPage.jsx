@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLocationFilter,
-  setBodyTypeFilter,
+
   toggleACFilter,
   toggleBathroomFilter,
   toggleGasFilter,
@@ -16,24 +16,30 @@ import {
   toggleTVFilter,
   toggleWaterFilter,
   resetFilters,
+  setFormTypeFilter,
  
 } from "../../redux/filtersSlice";
-import Camper from "../../components/Camper/Camper";
 import CustomCheckbox from "../../components/CustomCheckbox/CustomCheckbox";
 import Logo from "../../components/Logo/Logo";
 import css from "./CatalogPage.module.css";
 import { fetchFilteredVehicles } from "../../apiServise/apiServise.js";
+import CamperList from "../../components/CamperList/CamperList.jsx";
+import { useState } from "react";
 
 function CatalogPage() {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
+    const [showCampers, setShowCampers] = useState(false);
+
+   
+    
 
   const {
     isLoading,
     error,
     items: filteredCampers,
     location,
-    bodyType,
+    form,
     AC,
     transmission,
     kitchen,
@@ -48,12 +54,17 @@ function CatalogPage() {
   } = filters;
 
  
+ 
  const handleSearch = () => {
    dispatch(fetchFilteredVehicles(filters)).then(() => {
-     dispatch(resetFilters()); // Скидаємо фільтри після пошуку
+     setShowCampers(true); 
+     
    });
  };
+  
 
+
+  
   return (
     <div>
       {/* Header and Navigation */}
@@ -162,38 +173,35 @@ function CatalogPage() {
       <p>Vehicle type</p>
       <ul>
         <li>
-          <button
-            className={bodyType === "Van" ? css.selected : ""}
-            onClick={() => dispatch(setBodyTypeFilter("Van"))}
-          >
-            Van
-          </button>
+          <CustomCheckbox
+            checked={form === "wan"}
+            onChange={() => dispatch(setFormTypeFilter("wan"))}
+            label="Wan"
+          />
         </li>
         <li>
-          <button
-            className={bodyType === "Fully Integrated" ? css.selected : ""}
-            onClick={() => dispatch(setBodyTypeFilter("Fully Integrated"))}
-          >
-            Fully Integrated
-          </button>
+          <CustomCheckbox
+            checked={form === "fullyIntegrated"}
+            onChange={() => dispatch(setFormTypeFilter("fullyIntegrated"))}
+            label="Fully Integrated"
+          />
         </li>
         <li>
-          <button
-            className={bodyType === "Alcove" ? css.selected : ""}
-            onClick={() => dispatch(setBodyTypeFilter("Alcove"))}
-          >
-            Alcove
-          </button>
+          <CustomCheckbox
+            checked={form === "alcove"}
+            onChange={() => dispatch(setFormTypeFilter("alcove"))}
+            label="Alcove"
+          />
         </li>
       </ul>
       <button onClick={handleSearch}>Search</button>
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
-      <div className={css.campersList}>
-        {filteredCampers.map((camper) => (
-          <Camper key={camper.id} data={camper} />
-        ))}
-      </div>
+      {showCampers && (
+        <div className={css.campersList}>
+          <CamperList campers={filteredCampers} />
+        </div>
+      )}
       <button>Load More</button>
     </div>
   );

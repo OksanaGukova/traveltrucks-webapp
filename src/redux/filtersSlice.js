@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchFilteredVehicles } from "../apiServise/apiServise.js";
 
+// Початковий стан
 const initialState = {
   location: "",
-  bodyType: null,
+  form: null,
   engine: null,
   transmission: null,
   AC: false,
@@ -28,15 +29,14 @@ const filtersSlice = createSlice({
     setLocationFilter(state, action) {
       state.location = action.payload;
     },
-    setBodyTypeFilter(state, action) {
-      state.bodyType = action.payload;
+    setFormTypeFilter(state, action) {
+      state.form = action.payload;
     },
     togglePetrolFilter(state, action) {
       state.engine = action.payload;
     },
     setTransmissionFilter(state, action) {
-      
-      state.transmission = action.payload; 
+      state.transmission = action.payload;
     },
     toggleACFilter(state) {
       state.AC = !state.AC;
@@ -66,7 +66,7 @@ const filtersSlice = createSlice({
       state.water = !state.water;
     },
     resetFilters() {
-      return initialState; 
+      return initialState;
     },
   },
   extraReducers: (builder) => {
@@ -75,34 +75,31 @@ const filtersSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-       .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
+      .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
+        console.log("Fetched vehicles:", action.payload); // Лог для перевірки
+        console.log(
+          "Is action.payload an array?",
+          Array.isArray(action.payload)
+        ); // Перевірка типу
+
         state.isLoading = false;
-        state.items = action.payload;
-        state.filteredCampers = action.payload; 
-        state.location = "";
-        state.bodyType = null;
-        state.engine = null;
-        state.transmission = null;
-        state.AC = false;
-        state.bathroom = false;
-        state.kitchen = false;
-        state.TV = false;
-        state.radio = false;
-        state.refrigerator = false;
-        state.microwave = false;
-        state.gas = false;
-        state.water = false;
+        // Перевірка, чи є action.payload масивом, і оновлення filteredCampers
+        state.filteredCampers = Array.isArray(action.payload)
+          ? action.payload
+          : [];
+        state.items = action.payload; // Оновлення всіх автомобілів, якщо потрібно
       })
       .addCase(fetchFilteredVehicles.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload;
+        state.error = action.payload || "Something went wrong"; // Повідомлення про помилку
       });
   },
 });
 
+// Експортуємо дії редуктора
 export const {
   setLocationFilter,
-  setBodyTypeFilter,
+  setFormTypeFilter,
   togglePetrolFilter,
   setTransmissionFilter,
   toggleACFilter,

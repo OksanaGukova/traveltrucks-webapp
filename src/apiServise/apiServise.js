@@ -33,9 +33,9 @@ export const fetchFilteredVehicles = createAsyncThunk(
     });
 
     try {
-      const response = await axios.get(`/campers?${params.toString()}`);
+      const response = await axios.get(`/campers`);
       // Переконайтеся, що ви повертаєте масив
-      return response.data.vehicles || []; // Повертаємо масив vehicles або порожній масив
+      return response.data.items || []; // Повертаємо масив vehicles або порожній масив
     } catch (error) {
       return rejectWithValue(error.message);
     }

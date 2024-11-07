@@ -9,16 +9,28 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import persistReducer from "redux-persist/es/persistReducer";
+import storage from "redux-persist/lib/storage"; 
+import persistStore from "redux-persist/es/persistStore";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedCampersReducer = persistReducer(persistConfig, campersSlise);
 
 export const store = configureStore({
   reducer: {
-    campers: campersSlise,
+    campers: persistedCampersReducer,
     filters: filtersSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        ignoredActions: ["persist/PERSIST"],
       },
     }),
 });
+
+export const persistor = persistStore(store);

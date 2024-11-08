@@ -7,13 +7,11 @@ const CustomCheckbox = ({ checked, onChange, label }) => {
       >
         <button
           type="button"
-        
           onChange={onChange}
-          style={{ display: "none" }} 
+          style={{ display: "none" }}
         ></button>
         <div
           onClick={onChange}
-          
           style={{
             width: "112px",
             height: "96px",
@@ -24,17 +22,18 @@ const CustomCheckbox = ({ checked, onChange, label }) => {
             justifyContent: "center",
             cursor: "pointer",
             backgroundColor: "#fff",
-            
-            position: "relative", // Додано для позиціонування тексту
+    textAlign: "center",
+            position: "relative",
+            padding: "4px 16px", // Додано для позиціонування тексту
           }}
         >
           {checked && <span style={{ color: "#fff" }}>✔</span>}{" "}
           {/* Відображення галочки */}
           <span
             style={{
-              position: "absolute",
-            fontWeight: "500",
-            lineHeight: "1.5",
+              position: "relative",
+              fontWeight: "500",
+              lineHeight: "1.5",
               fontSize: "16px",
               pointerEvents: "none", // Щоб текст не перешкоджав кліку
             }}

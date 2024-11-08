@@ -1,0 +1,106 @@
+.header {
+
+padding-left: 64px;
+height: 72px;
+display: flex;
+ display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f7f7f7;
+  margin-bottom: 48px;
+}
+
+.navContainer {
+     display: flex;
+  gap: 32px; 
+  margin: 0 auto;
+}
+
+.nav {
+font-weight: 500;
+font-size: 16px;
+line-height: 1.5;
+color: #101828;
+}
+
+.nav:hover {
+color: #d84343;
+}
+
+.container {
+    display: flex;
+    padding-left: 64px;
+    padding-right: 64px;
+    padding-bottom: 52px;
+    gap: 64px;
+}
+
+.buttonContainer {
+    width: 360px;
+}
+
+.location {
+
+font-size: 16px;
+line-height: 1.5;
+color:#6c717b;
+margin-bottom: 8px;
+}
+
+.input {
+    border-radius: 12px;
+padding: 16px 20px 16px 20px;
+width: 360px;
+height: 56px;
+background-color: #f7f7f7;
+box-sizing: border-box;
+margin-bottom: 40px;
+}
+
+.filters {
+font-weight: 500;
+font-size: 16px;
+line-height: 1.5;
+color: #475467;
+margin-bottom: 32px;
+}
+
+.text {
+  
+font-weight: 600;
+font-size: 20px;
+line-height: 120%;
+margin-bottom: 24px;
+}
+
+.textContainer {
+border-bottom: 1px solid #dadde1;
+margin-bottom: 24px;
+}
+
+.checkList {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 12px;
+    margin-bottom: 32px;
+}
+
+.form {
+    display: flex;
+
+}
+
+.search {
+    border-radius: 200px;
+padding: 16px 60px;
+width: 166px;
+height: 56px;
+background-color: #e44848;
+border: none;
+font-weight: 500;
+font-size: 16px;
+line-height: 1.5;
+letter-spacing: -0.01em;
+color: #fff;
+}

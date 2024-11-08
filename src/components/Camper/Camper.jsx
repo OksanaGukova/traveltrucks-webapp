@@ -1,44 +1,58 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import css from './Camper.module.css'
 
-function Camper({ url, name, price, reviews, location, description }) {
+function Camper({
+  gallery,
+  name,
+  price,
+  rating,
+  location,
+  description,
+  equipment,
+}) {
+
+  const availableEquipment = Object.entries(equipment).filter(
+    ([_, value]) => value
+  );
+
   return (
-    <div>
-      <img src={url} alt={name} />
-      <h2>{name}</h2>
-      <p>Price: ${price}</p>
-      <p>Location: {location}</p>
-      <p>{description}</p>
+    <>
+      <div className={css.container}>
+        <div>
+          <img
+            className={css.img}
+            src={gallery[0]?.thumb}
+            alt={name}
+            width={292}
+            height={320}
+          />
+        </div>
+        <div className={css.descriptionContainer}>
+          <ul className={css.textContainer}>
+            <p className={css.text}>{name}</p>
+            <p className={css.text}> {price}</p>
+          </ul>
+          <ul className={css.smallTextContainer}>
+            <p className={css.smallText}> {rating}</p>
+            <p className={css.smallText}> {location}</p>
+          </ul>
+          <p className={css.description}> {description}</p>
 
-      <h3>Reviews:</h3>
-      <ul>
-        {reviews.map((review, index) => (
-          <li key={index}>
-            <h4>{review.reviewer_name}</h4>
-            <p>Rating: {review.reviewer_rating}</p>
-            <p>{review.comment}</p>
-          </li>
-        ))}
-      </ul>
-
-      <div>
-        {/* Example SVG icons, replace with actual paths */}
-        <svg>
-          <use href={""}></use>
-        </svg>
-        <svg>
-          <use href={""}></use>
-        </svg>
-        <svg>
-          <use href={""}></use>
-        </svg>
-        <svg>
-          <use href={""}></use>
-        </svg>
+          
+          {availableEquipment.length > 0 && (
+            <div>
+              <ul className={css.equipmentContainer}>
+                {availableEquipment.map(([key]) => (
+                  <li className={css.equipment} key={key}>
+                    {key}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <button className={css.button}>Show more</button>
+        </div>
       </div>
-
-      <button>Show more</button>
-    </div>
+    </>
   );
 }
 

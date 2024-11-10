@@ -8,9 +8,10 @@ axios.defaults.baseURL = BASE_URL;
 
 export const fetchCamperDetails = createAsyncThunk(
   "camper/fetchCamperDetails",
-  async (camperId, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/campers/${camperId}`);
+      const response = await axios.get(`/campers/${id}`);
+
       return response.data;
     } catch (error) {
       console.error("Error fetching camper details:", error);

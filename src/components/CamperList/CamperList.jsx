@@ -18,7 +18,8 @@ function CamperList() {
         {filteredCampers.slice(0, visibleCount).map((camper) => (
           <li className={css.container} key={camper.id}>
             <Camper
-              gallery={camper.gallery} 
+              id={camper.id}
+              gallery={camper.gallery}
               name={camper.name}
               price={camper.price}
               rating={camper.rating}
@@ -35,16 +36,21 @@ function CamperList() {
                 gas: camper.gas,
                 water: camper.water,
               }}
+              reviewsCount={camper.reviews.length}
             />
           </li>
         ))}
       </ul>
-
-      {visibleCount < filteredCampers.length && (
-        <button onClick={handleShowMore}>Load more</button>
-      )}
+      <div className={css.buttonContainer}>
+        {visibleCount < filteredCampers.length && (
+          <button className={css.button} onClick={handleShowMore}>
+            Load more
+          </button>
+        )}
+      </div>
     </div>
   );
+  
 }
 
 export default CamperList;

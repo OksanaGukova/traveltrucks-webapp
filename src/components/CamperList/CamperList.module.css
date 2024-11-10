@@ -2,7 +2,10 @@
     display: flex;
     flex-direction: column;
     gap: 32px;
+    margin-bottom: 40px;
 }
+
+
 
 .container {
     border: 1px solid #dadde1;
@@ -11,4 +14,21 @@ padding: 24px;
 width: 888px;
 height: 368px;
 padding: 24px;
+}
+
+.button {
+    border: 1px solid #dadde1;
+border-radius: 200px;
+padding: 16px 32px;
+width: 145px;
+height: 56px;
+font-weight: 500;
+font-size: 16px;
+line-height: 1.5;
+letter-spacing: -0.01em;
+background-color: #fff;
+}
+
+.buttonContainer {
+    text-align: center;
 }

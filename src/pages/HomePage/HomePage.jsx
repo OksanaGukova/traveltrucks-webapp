@@ -18,8 +18,12 @@ function HomePage() {
       </div>
       <div className={css.textContainer}>
         <h1 className={css.headerText}>Campers of your dreams</h1>
-        <p className={css.text}>You can find everything you want in our catalog</p>
-        <button className={css.button}>View Now</button>
+        <p className={css.text}>
+          You can find everything you want in our catalog
+        </p>
+        <NavLink to="/catalog">
+          <button className={css.button}>View Now</button>
+        </NavLink>
       </div>
     </div>
   );

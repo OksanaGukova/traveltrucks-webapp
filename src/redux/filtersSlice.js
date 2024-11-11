@@ -26,6 +26,13 @@ const filtersSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
+    clearFilteredVehicles(state) {
+     
+      state.items = [];
+      state.filteredCampers = [];
+      state.isLoading = false;
+      state.error = null;
+    },
     setLocationFilter(state, action) {
       state.location = action.payload;
     },
@@ -75,28 +82,19 @@ const filtersSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
-        console.log("Fetched vehicles:", action.payload); // Лог для перевірки
-        console.log(
-          "Is action.payload an array?",
-          Array.isArray(action.payload)
-        ); // Перевірка типу
-
-        state.isLoading = false;
-        // Перевірка, чи є action.payload масивом, і оновлення filteredCampers
-        state.filteredCampers = Array.isArray(action.payload)
-          ? action.payload
-          : [];
-        state.items = action.payload; // Оновлення всіх автомобілів, якщо потрібно
-      })
+     .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
+  console.log("Fetched vehicles with filters:", action.payload); // Лог результатів
+  state.isLoading = false;
+  state.filteredCampers = Array.isArray(action.payload) ? action.payload : [];
+})
       .addCase(fetchFilteredVehicles.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.payload || "Something went wrong"; // Повідомлення про помилку
+        state.error = action.payload || "Something went wrong";
       });
   },
 });
 
-// Експортуємо дії редуктора
+
 export const {
   setLocationFilter,
   setFormTypeFilter,
@@ -112,6 +110,7 @@ export const {
   toggleGasFilter,
   toggleWaterFilter,
   resetFilters,
+  clearFilteredVehicles,
 } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

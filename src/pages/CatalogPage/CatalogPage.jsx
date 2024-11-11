@@ -15,8 +15,9 @@ import {
   setTransmissionFilter,
   toggleTVFilter,
   toggleWaterFilter,
-/*   resetFilters, */
+
   setFormTypeFilter,
+  clearFilteredVehicles,
  
 } from "../../redux/filtersSlice";
 import CustomCheckbox from "../../components/CustomCheckbox/CustomCheckbox";
@@ -25,6 +26,7 @@ import css from "./CatalogPage.module.css";
 import { fetchFilteredVehicles } from "../../apiServise/apiServise.js";
 import CamperList from "../../components/CamperList/CamperList.jsx";
 import { useState } from "react";
+import sprite from '../../../public/svg/icons.svg'
 
 function CatalogPage() {
   const dispatch = useDispatch();
@@ -53,15 +55,17 @@ function CatalogPage() {
     water,
   } = filters;
 
+
  
  
  const handleSearch = () => {
+   dispatch(clearFilteredVehicles()); 
    dispatch(fetchFilteredVehicles(filters)).then(() => {
-     setShowCampers(true); 
-     
+     setShowCampers(true);
    });
  };
   
+ 
 
 
   
@@ -82,6 +86,9 @@ function CatalogPage() {
         <div className={css.buttonContainer}>
           <p className={css.location}>Location</p>
           <div className={css.inputWrapper}>
+            <svg className={css.svg}>
+              <use href={`${sprite}#icon-Map-1`}></use>
+            </svg>
             <input
               className={css.input}
               type="text"
@@ -99,6 +106,7 @@ function CatalogPage() {
                 checked={AC}
                 onChange={() => dispatch(toggleACFilter())}
                 label="AC"
+                icon={`${sprite}#icon-AC`}
               />
             </li>
             <li>
@@ -106,6 +114,7 @@ function CatalogPage() {
                 checked={transmission === "automatic"}
                 onChange={() => dispatch(setTransmissionFilter("automatic"))}
                 label="Automatic"
+                icon={`${sprite}#icon-automat`}
               />
             </li>
             <li>
@@ -113,6 +122,7 @@ function CatalogPage() {
                 checked={kitchen}
                 onChange={() => dispatch(toggleKitchenFilter())}
                 label="Kitchen"
+                icon={`${sprite}#icon-coffy`}
               />
             </li>
             <li>
@@ -120,6 +130,7 @@ function CatalogPage() {
                 checked={TV}
                 onChange={() => dispatch(toggleTVFilter())}
                 label="TV"
+                icon={`${sprite}#icon-TV`}
               />
             </li>
             <li>
@@ -127,6 +138,7 @@ function CatalogPage() {
                 checked={bathroom}
                 onChange={() => dispatch(toggleBathroomFilter())}
                 label="Bathroom"
+                icon={`${sprite}#icon-shower`}
               />
             </li>
             <li>
@@ -134,6 +146,7 @@ function CatalogPage() {
                 checked={radio}
                 onChange={() => dispatch(toggleRadioFilter())}
                 label="Radio"
+                icon={`${sprite}#icon-ui-radios`}
               />
             </li>
             <li>
@@ -141,6 +154,7 @@ function CatalogPage() {
                 checked={refrigerator}
                 onChange={() => dispatch(toggleRefrigeratorFilter())}
                 label="Refrigerator"
+                icon={`${sprite}#icon-refrig`}
               />
             </li>
             <li>
@@ -148,6 +162,7 @@ function CatalogPage() {
                 checked={microwave}
                 onChange={() => dispatch(toggleMicrowaveFilter())}
                 label="Microwave"
+                icon={`${sprite}#icon-lucide_microwave`}
               />
             </li>
             <li>
@@ -155,6 +170,7 @@ function CatalogPage() {
                 checked={gas}
                 onChange={() => dispatch(toggleGasFilter())}
                 label="Gas"
+                icon={`${sprite}#icon-hugeicons_gas-stove`}
               />
             </li>
             <li>
@@ -162,6 +178,7 @@ function CatalogPage() {
                 checked={engine === "petrol"}
                 onChange={() => dispatch(togglePetrolFilter("petrol"))}
                 label="Petrol"
+                icon={`${sprite}#icon-fuel-pump-1`}
               />
             </li>
             <li>
@@ -169,6 +186,7 @@ function CatalogPage() {
                 checked={water}
                 onChange={() => dispatch(toggleWaterFilter())}
                 label="Water"
+                icon={`${sprite}#icon-ion_water-outline`}
               />
             </li>
           </ul>
@@ -181,6 +199,7 @@ function CatalogPage() {
                 checked={form === "wan"}
                 onChange={() => dispatch(setFormTypeFilter("wan"))}
                 label="Wan"
+                icon={`${sprite}#icon-van`}
               />
             </li>
             <li>
@@ -188,6 +207,7 @@ function CatalogPage() {
                 checked={form === "fullyIntegrated"}
                 onChange={() => dispatch(setFormTypeFilter("fullyIntegrated"))}
                 label="Fully Integrated"
+                icon={`${sprite}#icon-fully`}
               />
             </li>
             <li>
@@ -195,11 +215,14 @@ function CatalogPage() {
                 checked={form === "alcove"}
                 onChange={() => dispatch(setFormTypeFilter("alcove"))}
                 label="Alcove"
+                icon={`${sprite}#icon-alcove`}
               />
             </li>
           </ul>
 
-          <button className={css.search} onClick={handleSearch}>Search</button>
+          <button className={css.search} onClick={handleSearch}>
+            Search
+          </button>
         </div>
         {isLoading && <p>Loading...</p>}
         {error && <p>Error: {error}</p>}

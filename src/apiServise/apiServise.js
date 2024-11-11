@@ -34,10 +34,13 @@ export const fetchFilteredVehicles = createAsyncThunk(
     });
 
     try {
-      const response = await axios.get(`/campers`);
-      // Переконайтеся, що ви повертаєте масив
-      return response.data.items || []; // Повертаємо масив vehicles або порожній масив
+      const response = await axios.get(`/campers?${params.toString()}`); 
+      return response.data.items || [];
     } catch (error) {
+       console.error(
+         "Error fetching vehicles:",
+         error.response ? error.response.data : error.message
+       );
       return rejectWithValue(error.message);
     }
   }

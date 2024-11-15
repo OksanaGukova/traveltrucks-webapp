@@ -31,10 +31,8 @@ import sprite from '../../../public/svg/icons.svg'
 function CatalogPage() {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
-    const [showCampers, setShowCampers] = useState(false);
+  const [showCampers, setShowCampers] = useState(false);
 
-   
-    
 
   const {
     isLoading,
@@ -55,20 +53,31 @@ function CatalogPage() {
     water,
   } = filters;
 
-
+const prepareQueryParams = (filters) => {
+  return Object.fromEntries(
+    Object.entries(filters).filter(
+      ([key, value]) =>
+        value !== null &&
+        value !== false &&
+        value !== "" &&
+        key !== "items" &&
+        key !== "filteredCampers" &&
+        key !== "error"
+    )
+  );
+};
  
  
- const handleSearch = () => {
-   dispatch(clearFilteredVehicles()); 
-   dispatch(fetchFilteredVehicles(filters)).then(() => {
-     setShowCampers(true);
-   });
- };
+  const handleSearch = () => {
+   const sanitizedFilters = prepareQueryParams(filters);
+  dispatch(clearFilteredVehicles()); 
+  setShowCampers(false); 
+ dispatch(fetchFilteredVehicles(sanitizedFilters)).then(() => {
+    setShowCampers(true); 
+  });
+};
   
  
-
-
-  
   return (
     <div>
       <div className={css.header}>
@@ -86,7 +95,7 @@ function CatalogPage() {
         <div className={css.buttonContainer}>
           <p className={css.location}>Location</p>
           <div className={css.inputWrapper}>
-            <svg className={css.svg}>
+            <svg className={css.locationSvg}>
               <use href={`${sprite}#icon-Map-1`}></use>
             </svg>
             <input

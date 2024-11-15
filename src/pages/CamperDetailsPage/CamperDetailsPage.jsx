@@ -4,6 +4,7 @@ import { fetchCamperDetails } from "../../apiServise/apiServise.js";
 import css from "./CamperDetailsPage.module.css";
 import Logo from "../../components/Logo/Logo.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import sprite from "../../../public/svg/icons.svg";
 
 function CamperDetailsPage() {
   const { id } = useParams();
@@ -34,13 +35,19 @@ function CamperDetailsPage() {
           <div>
             <p className={css.name}>{selectedCamper.name}</p>
             <ul>
+              <div className={ css.starContainer}>
+                 <svg className={css.starSvg}>
+                <use href={`${sprite}#icon-Star-Pressed-1`}></use>
+              </svg>
               <p className={css.rating}>
                 {selectedCamper.rating} ({selectedCamper.reviews?.length || 0}{" "}
                 reviews)
               </p>
+              </div>
+             
               <p className={css.location}>{selectedCamper.location}</p>
             </ul>
-            <p className={css.price}>{selectedCamper.price}</p>
+            <p className={css.price}>€{selectedCamper.price.toFixed(2)}</p>
             <div className={css.imgContainer}>
               {selectedCamper.gallery?.map((image, index) => (
                 <img

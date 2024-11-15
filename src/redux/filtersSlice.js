@@ -27,11 +27,8 @@ const filtersSlice = createSlice({
   initialState,
   reducers: {
     clearFilteredVehicles(state) {
-     
-      state.items = [];
-      state.filteredCampers = [];
-      state.isLoading = false;
-      state.error = null;
+   
+      Object.assign(state, initialState);
     },
     setLocationFilter(state, action) {
       state.location = action.payload;
@@ -40,10 +37,11 @@ const filtersSlice = createSlice({
       state.form = action.payload;
     },
     togglePetrolFilter(state, action) {
-      state.engine = action.payload;
+      state.engine = state.engine === action.payload ? null : action.payload;
     },
     setTransmissionFilter(state, action) {
-      state.transmission = action.payload;
+      state.transmission =
+        state.transmission === action.payload ? null : action.payload;
     },
     toggleACFilter(state) {
       state.AC = !state.AC;
@@ -82,18 +80,19 @@ const filtersSlice = createSlice({
         state.isLoading = true;
         state.error = null;
       })
-     .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
-  console.log("Fetched vehicles with filters:", action.payload); // Лог результатів
-  state.isLoading = false;
-  state.filteredCampers = Array.isArray(action.payload) ? action.payload : [];
-})
+      .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
+        console.log("Fetched vehicles with filters:", action.payload); // Лог результатів
+        state.isLoading = false;
+        state.filteredCampers = Array.isArray(action.payload)
+          ? action.payload
+          : [];
+      })
       .addCase(fetchFilteredVehicles.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload || "Something went wrong";
       });
   },
 });
-
 
 export const {
   setLocationFilter,

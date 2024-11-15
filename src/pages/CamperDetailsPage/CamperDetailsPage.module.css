@@ -123,3 +123,13 @@ margin-bottom: 60px;
 .bodyContainer {
     padding: 0 64px 80px 64px;
 }
+
+.starSvg {
+    width: 16px;
+height: 16px;
+}
+
+.starContainer {
+  display: flex;
+  gap: 4px;
+}

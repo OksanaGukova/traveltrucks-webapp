@@ -3,7 +3,7 @@
 }
 
 .descriptionContainer {
-  overflow-y: auto;
+
 height: 320px;
 }
 .container{
@@ -45,6 +45,11 @@ font-size: 16px;
 line-height: 1.5;
 color: #475467;
 margin-bottom: 24px;
+display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* Показує лише один рядок */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .equipmentContainer {
@@ -77,4 +82,40 @@ font-size: 16px;
 line-height: 1.5;
 letter-spacing: -0.01em;
 color: #fff;
+}
+
+.starSvg {
+  width: 16px;
+height: 16px;
+}
+
+.svg {
+
+ width: 25px;
+ height: 24px;
+
+  pointer-events: none; 
+}
+
+
+.svgButton:active .svg {
+  transform: scale(1); 
+}
+
+.favorite {
+  color:  #E44848; 
+}
+
+
+.svgButton {
+     width: 25px;
+ height: 24px;
+border: none;
+cursor: pointer;
+background-color: #fff; 
+}
+
+.priceContainer {
+    display: flex;
+    align-items: center;
 }

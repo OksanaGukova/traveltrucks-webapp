@@ -107,8 +107,7 @@ color: #fff;
 
 .svg {
  position: absolute;
-  left: 20px; /* Відступ зліва для іконки */
-  top: 30%;
+  left: 20px; 
   transform: translateY(-50%);
  width: 20px;
  height: 20px;
@@ -116,7 +115,18 @@ color: #fff;
   pointer-events: none; 
 }
 
+.locationSvg{
+     position: absolute;
+  left: 20px; /* Відступ зліва для іконки */
+  top: 30%;
+  left: 20px; 
+  transform: translateY(-50%);
+width: 20px;
+ height: 20px;
+}
+
 .inputWrapper {
      position: relative;
   display: inline-block;
 }
+

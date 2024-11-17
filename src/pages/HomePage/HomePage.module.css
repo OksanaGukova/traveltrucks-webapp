@@ -31,7 +31,9 @@ color: #d84343;
       align-items: flex-start; 
   justify-content: center; 
   height: 100vh; 
-   background-image: url('(~@/public/img/Picture (1).jpg)');
+   background-image: url('../../../public/img/bgImg.jpg'), url('../../../public/img/bgImg2x.jpg');
+
+ 
    background-repeat: no-repeat;
 background-size: cover;
 background-position: center;

@@ -46,7 +46,7 @@ function CamperDetailsPage() {
               </div>
               <p className={css.location}>{selectedCamper.location}</p>
             </ul>
-            <p className={css.price}>€{selectedCamper.price}</p>
+            <p className={css.price}>€{selectedCamper.price.toFixed(2)}</p>
             <div className={css.imgContainer}>
               {selectedCamper.gallery?.map((image, index) => (
                 <img

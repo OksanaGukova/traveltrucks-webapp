@@ -2,9 +2,10 @@ import { Suspense, useEffect } from "react";
 import { NavLink, Outlet, useParams } from "react-router-dom";
 import { fetchCamperDetails } from "../../apiServise/apiServise.js";
 import css from "./CamperDetailsPage.module.css";
-import Logo from "../../components/Logo/Logo.jsx";
+
 import { useDispatch, useSelector } from "react-redux";
 import sprite from "../../../public/svg/icons.svg";
+import Header from "../../components/Header/Header.jsx";
 
 function CamperDetailsPage() {
   const { id } = useParams();
@@ -19,17 +20,7 @@ function CamperDetailsPage() {
 
   return (
     <div className={css.body}>
-      <div className={css.header}>
-        <Logo />
-        <div className={css.navContainer}>
-          <NavLink className={css.nav} to="/">
-            Home
-          </NavLink>
-          <NavLink className={css.nav} to="/catalog">
-            Catalog
-          </NavLink>
-        </div>
-      </div>
+      <Header/>
       <div className={css.bodyContainer}>
         {selectedCamper ? (
           <div>

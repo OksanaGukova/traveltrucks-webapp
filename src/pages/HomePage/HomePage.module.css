@@ -28,10 +28,10 @@ color: #d84343;
     padding-left: 64px;
     display: flex;
     flex-direction: column;
-      align-items: flex-start; /* Вирівнює текстовий вміст ліворуч */
-  justify-content: center; /* Вирівнює по вертикалі по центру екрану */
-  height: 100vh; /* Займає всю висоту екрана */
-   background-image: url('../../../public/img/Picture\ \(1\).jpg');
+      align-items: flex-start; 
+  justify-content: center; 
+  height: 100vh; 
+   background-image: url('(~@/public/img/Picture (1).jpg)');
    background-repeat: no-repeat;
 background-size: cover;
 background-position: center;

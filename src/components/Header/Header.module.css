@@ -1,0 +1,28 @@
+.header {
+
+padding-left: 64px;
+height: 72px;
+display: flex;
+ display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f7f7f7;
+  margin-bottom: 48px;
+}
+
+.navContainer {
+     display: flex;
+  gap: 32px; 
+  margin: 0 auto;
+}
+
+.nav {
+font-weight: 500;
+font-size: 16px;
+line-height: 1.5;
+color: #101828;
+}
+
+.nav:hover {
+color: #d84343;
+}

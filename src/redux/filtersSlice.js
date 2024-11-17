@@ -81,7 +81,6 @@ const filtersSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchFilteredVehicles.fulfilled, (state, action) => {
-        console.log("Fetched vehicles with filters:", action.payload); // Лог результатів
         state.isLoading = false;
         state.filteredCampers = Array.isArray(action.payload)
           ? action.payload

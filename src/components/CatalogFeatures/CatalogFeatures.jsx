@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchCamperDetails } from '../../apiServise/apiServise.js';
 import Form from '../Form/Form.jsx';
-
+import sprite from "../../../public/svg/icons.svg";
 
 
 function CatalogFeatures() {
@@ -23,25 +23,80 @@ function CatalogFeatures() {
   return (
     <div className={css.container}>
       <div className={css.detailsContainer}>
-        <div className={css.equipment}>
-          {selectedCamper.AC && <div className={css.includes}>AC</div>}
+        <ul className={css.equipment}>
+          {selectedCamper.AC && (
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-AC`}></use>
+              </svg>
+              <p>AC</p>
+            </li>
+          )}
           {selectedCamper.kitchen && (
-            <div className={css.includes}>Kitchen</div>
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-coffy`}></use>
+              </svg>
+              <p>Kitchen</p>
+            </li>
           )}
-          {selectedCamper.TV && <div className={css.includes}>TV</div>}
+          {selectedCamper.TV && (
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-TV`}></use>
+              </svg>
+              <p>TV</p>
+            </li>
+          )}
           {selectedCamper.bathroom && (
-            <div className={css.includes}>Bathroom</div>
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-shower`}></use>
+              </svg>
+              <p>Bathroom</p>
+            </li>
           )}
-          {selectedCamper.radio && <div className={css.includes}>Radio</div>}
+          {selectedCamper.radio && (
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-ui-radios`}></use>
+              </svg>
+              <p>Radio</p>
+            </li>
+          )}
           {selectedCamper.refrigerator && (
-            <div className={css.includes}>Refrigerator</div>
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-refrig`}></use>
+              </svg>
+              <p>Refrigerator</p>
+            </li>
           )}
           {selectedCamper.microwave && (
-            <div className={css.includes}>Microwave</div>
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-lucide_microwave`}></use>
+              </svg>
+              <p>Microwave</p>
+            </li>
           )}
-          {selectedCamper.gas && <div className={css.includes}>Gas</div>}
-          {selectedCamper.water && <div className={css.includes}>Water</div>}
-        </div>
+          {selectedCamper.gas && (
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-hugeicons_gas-stove`}></use>
+              </svg>
+              <p>Gas</p>
+            </li>
+          )}
+          {selectedCamper.water && (
+            <li className={css.includes}>
+              <svg className={css.svg}>
+                <use href={`${sprite}#icon-ion_water-outline`}></use>
+              </svg>
+              <p>Water</p>
+            </li>
+          )}
+        </ul>
         <p className={css.details}>Vehicle details</p>
         <ul className={css.list}>
           <li className={css.listItem}>
@@ -67,7 +122,7 @@ function CatalogFeatures() {
         </ul>
       </div>
       <div className={css.formContainer}>
-       <Form/>
+        <Form />
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react"; // Додаємо useEffect
+import { useEffect, useState } from "react"; 
 import css from "./Camper.module.css";
 import sprite from "../../../public/svg/icons.svg";
+import { ThreeCircles } from "react-loader-spinner"; 
 
 function Camper({
   id,
@@ -15,24 +16,21 @@ function Camper({
   reviewsCount,
 }) {
   const navigate = useNavigate();
-  const [isFavorite, setIsFavorite] = useState(false); // Стан обраного кемпера
-
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [loading, setLoading] = useState(false); 
 
   useEffect(() => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setIsFavorite(favorites.includes(id));
   }, [id]);
 
-
   const handleFavoriteToggle = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
     if (isFavorite) {
- 
       const updatedFavorites = favorites.filter((favId) => favId !== id);
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
     } else {
-     
       favorites.push(id);
       localStorage.setItem("favorites", JSON.stringify(favorites));
     }
@@ -41,7 +39,9 @@ function Camper({
   };
 
   const handleShowMore = () => {
+    setLoading(true); 
     navigate(`/catalog/${id}`);
+    setLoading(false); 
   };
 
   const availableEquipment = Object.entries(equipment).filter(
@@ -98,7 +98,17 @@ function Camper({
           </div>
         )}
         <button className={css.button} onClick={handleShowMore}>
-          Show more
+          {loading ? (
+            <ThreeCircles
+              height="30"
+              width="30"
+              color="#4fa94d"
+              ariaLabel="loading"
+              visible={true}
+            />
+          ) : (
+            "Show more"
+          )}
         </button>
       </div>
     </div>

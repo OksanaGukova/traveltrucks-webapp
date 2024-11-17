@@ -53,3 +53,7 @@ color: #fff;
 border: none;
 
 }
+
+.button:hover {
+    background-color: #d84343;
+}

@@ -2,38 +2,6 @@
     width: 1440px;
 }
 
-.header {
-    border-bottom: 1px solid #f2f4f7;
-padding-left: 64px;
-height: 72px;
-display: flex;
- display: flex;
-  align-items: center;
-  justify-content: space-between;
-    background-color: #f7f7f7;
-    margin-bottom: 48px;
-}
-
-.navContainer {
-     display: flex;
-  gap: 32px; 
-  margin: 0 auto;
-}
-
-.nav {
-font-weight: 500;
-font-size: 16px;
-line-height: 1.5;
-}
-
-/* .nav:hover {
-color: #d84343;
-} */
-
-a {
-     text-decoration: none; 
-}
-
 
 .link {
 font-weight: 600;
@@ -41,6 +9,11 @@ font-size: 20px;
 line-height: 1.2;
 position: relative;
  text-decoration: none; 
+}
+
+.link:hover,
+.link:focus {
+  text-decoration: none; /* Підтвердження для станів hover та focus */
 }
 
 .link::after {
@@ -114,7 +87,7 @@ margin-bottom: 60px;
     gap: 40px;
     margin-bottom: 44px;
     border-bottom: 1px solid #dadde1;
-  padding-bottom: 24px; /* Відстань між посиланнями і лінією */
+  padding-bottom: 24px; 
    
 }
 

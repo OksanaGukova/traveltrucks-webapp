@@ -29,6 +29,10 @@ letter-spacing: -0.01em;
 background-color: #fff;
 }
 
+.button:hover {
+     border: 1px solid #d84343;
+}
+
 .buttonContainer {
     text-align: center;
 }

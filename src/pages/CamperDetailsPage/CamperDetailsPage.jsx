@@ -35,16 +35,15 @@ function CamperDetailsPage() {
           <div>
             <p className={css.name}>{selectedCamper.name}</p>
             <ul>
-              <div className={ css.starContainer}>
-                 <svg className={css.starSvg}>
-                <use href={`${sprite}#icon-Star-Pressed-1`}></use>
-              </svg>
-              <p className={css.rating}>
-                {selectedCamper.rating} ({selectedCamper.reviews?.length || 0}{" "}
-                reviews)
-              </p>
+              <div className={css.starContainer}>
+                <svg className={css.starSvg}>
+                  <use href={`${sprite}#icon-Star-Pressed-1`}></use>
+                </svg>
+                <p className={css.rating}>
+                  {selectedCamper.rating} ({selectedCamper.reviews?.length || 0}{" "}
+                  reviews)
+                </p>
               </div>
-             
               <p className={css.location}>{selectedCamper.location}</p>
             </ul>
             <p className={css.price}>€{selectedCamper.price.toFixed(2)}</p>
@@ -66,10 +65,20 @@ function CamperDetailsPage() {
         )}
 
         <nav className={css.navLink}>
-          <NavLink className={css.link} to="features">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? `${css.link} ${css.active}` : css.link
+            }
+            to="features"
+          >
             Features
           </NavLink>
-          <NavLink className={css.link} to="reviews">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? `${css.link} ${css.active}` : css.link
+            }
+            to="reviews"
+          >
             Reviews
           </NavLink>
         </nav>

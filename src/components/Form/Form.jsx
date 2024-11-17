@@ -1,99 +1,118 @@
-import { useState } from 'react'
-import css from './Form.module.css'
-import DatePicker from 'react-datepicker';
-
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
+import "react-toastify/dist/ReactToastify.css"; // Import CSS for Toastify
+import css from "./Form.module.css";
 
-function Form() {
+const BookingForm = () => {
+  // Валідація форми
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .min(2, "Name must be at least 2 characters")
+      .required("Name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    bookingDate: Yup.date().required("Booking date is required").nullable(),
+    message: Yup.string().min(10, "Message must be at least 10 characters"),
+  });
 
-     const [formData, setFormData] = useState({
-       name: "",
-       email: "",
-       bookingDate: "",
-       message: "",
-     });
+  // Початкові значення
+  const initialValues = {
+    name: "",
+    email: "",
+    bookingDate: null,
+    message: "",
+  };
 
-     const handleChange = (e) => {
-       const { name, value } = e.target;
-       setFormData({
-         ...formData,
-         [name]: value,
-       });
-     };
+  // Обробка відправки форми
+  const handleSubmit = (values, { resetForm }) => {
+    console.log("Form submitted:", values);
+    resetForm(); // Очистити форму після відправки
+    toast.success("Your booking request has been successfully submitted!"); // Show success toast
+  };
 
-     const handleSubmit = (e) => {
-       e.preventDefault();
-
-       console.log("Form submitted:", formData);
-
-       setFormData({
-         name: "",
-         email: "",
-         bookingDate: "",
-         message: "",
-       });
-     };
-    return (
-      <div className={ css.container}>
-        <p className={css.book}>Book your campervan now</p>
-        <p className={css.formText}>
-          Stay connected! We are always ready to help you.
-        </p>
-        <form onSubmit={handleSubmit}>
-          <div className={css.inputContainer}>
-            <div>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                placeholder="Name*"
-                className={css.input}
-              />
-            </div>
-            <div>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                placeholder="Email*"
-                className={css.input}
-              />
-            </div>
-            <div>
+  return (
+    <div className={css.container}>
+      <p className={css.book}>Book your campervan now</p>
+      <p className={css.formText}>
+        Stay connected! We are always ready to help you.
+      </p>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ setFieldValue, values }) => (
+          <Form>
+            <div className={css.inputContainer}>
+              <div>
+                <Field
+                  type="text"
+                  name="name"
+                  placeholder="Name*"
+                  className={css.input}
+                />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
+              <div>
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="Email*"
+                  className={css.input}
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
               <div>
                 <DatePicker
-                  selected={formData.bookingDate}
-                  onChange={(date) =>
-                    setFormData({ ...formData, bookingDate: date })
-                  }
+                  selected={values.bookingDate}
+                  onChange={(date) => setFieldValue("bookingDate", date)}
                   placeholderText="Booking date*"
                   className={css.input}
                 />
+                <ErrorMessage
+                  name="bookingDate"
+                  component="div"
+                  className={css.error}
+                />
               </div>
             </div>
-          </div>
-          <div>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              required
-              placeholder="Comment"
-              className={css.textarea}
-            />
-          </div>
-          <div className={css.buttonContainer}>
-            <button className={css.button} type="submit">
-              Send
-            </button>
-          </div>
-        </form>
-      </div>
-    );
-}
+            <div>
+              <Field
+                as="textarea"
+                name="message"
+                placeholder="Comment"
+                className={css.textarea}
+              />
+              <ErrorMessage
+                name="message"
+                component="div"
+                className={css.error}
+              />
+            </div>
+            <div className={css.buttonContainer}>
+              <button className={css.button} type="submit">
+                Send
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
+      <ToastContainer /> {/* Render ToastContainer */}
+    </div>
+  );
+};
 
-export default Form
+export default BookingForm;

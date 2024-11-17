@@ -1,9 +1,7 @@
 
-import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLocationFilter,
-
   toggleACFilter,
   toggleBathroomFilter,
   toggleGasFilter,
@@ -15,24 +13,21 @@ import {
   setTransmissionFilter,
   toggleTVFilter,
   toggleWaterFilter,
-
   setFormTypeFilter,
   clearFilteredVehicles,
- 
 } from "../../redux/filtersSlice";
 import CustomCheckbox from "../../components/CustomCheckbox/CustomCheckbox";
-import Logo from "../../components/Logo/Logo";
 import css from "./CatalogPage.module.css";
 import { fetchFilteredVehicles } from "../../apiServise/apiServise.js";
 import CamperList from "../../components/CamperList/CamperList.jsx";
 import { useState } from "react";
 import sprite from '../../../public/svg/icons.svg'
+import Header from "../../components/Header/Header.jsx";
 
 function CatalogPage() {
   const dispatch = useDispatch();
   const filters = useSelector((state) => state.filters);
   const [showCampers, setShowCampers] = useState(false);
-
 
   const {
     isLoading,
@@ -77,20 +72,9 @@ const prepareQueryParams = (filters) => {
   });
 };
   
- 
   return (
     <div>
-      <div className={css.header}>
-        <Logo />
-        <div className={css.navContainer}>
-          <NavLink className={css.nav} to="/">
-            Home
-          </NavLink>
-          <NavLink className={css.nav} to="/catalog">
-            Catalog
-          </NavLink>
-        </div>
-      </div>
+      <Header/>
       <div className={css.container}>
         <div className={css.buttonContainer}>
           <p className={css.location}>Location</p>
@@ -102,6 +86,7 @@ const prepareQueryParams = (filters) => {
               className={css.input}
               type="text"
               value={location}
+              placeholder="Enter city"
               onChange={(e) => dispatch(setLocationFilter(e.target.value))}
             />
           </div>

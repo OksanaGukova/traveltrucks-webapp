@@ -10,10 +10,10 @@
     gap: 8px;
 }
 .includes {
-       display: inline-block;
+       display: flex;
     border-radius: 100px;
 padding: 12px 18px;
-
+gap: 8px;
 height: 48px;
 background-color: #f2f4f7;
 text-align: center;
@@ -75,3 +75,7 @@ width: 641px;
 
 }
 
+.svg {
+    width: 20px;
+    height: 20px;
+}
